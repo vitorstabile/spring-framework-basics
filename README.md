@@ -6,10 +6,13 @@
     - [Chapter 1 - Part 1: What is Spring Framework?](#chapter1part1)
     - [Chapter 1 - Part 2: Why to use Spring?](#chapter1part2)
     - [Chapter 1 - Part 3: Applications of Spring](#chapter1part3)
+    - [Chapter 1 - Part 4: Applications of Spring](#chapter1part4)
+    - [Chapter 1 - Part 5: Applications of Spring](#chapter1part5)
 2. [Chapter 2: B](#chapter2)
     - [Chapter 2 - Part 1: Ba](#chapter2part1)
     - [Chapter 2 - Part 2: Bb](#chapter2part2)
     - [Chapter 2 - Part 3: Bc](#chapter2part3)
+3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
   
@@ -61,3 +64,43 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Bb
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: Bc
+
+## Bibliography's <a name="biblio"></a>
+
+Some of references that I use.
+
+1. [Spring Framework][geeksforgeeks-url]
+
+<!-- URL's -->
+
+[geeksforgeeks-url]:https://www.geeksforgeeks.org/introduction-to-spring-framework/
+
+<!-- Sources from Notes -->
+
+[pmfail-url]: https://www.youtube.com/watch?v=dQp-z4AUZ78
+[requirements-url]: https://ecomputernotes.com/software-engineering/softwarerequirement
+[constraints-url]: https://www.parkersoftware.com/blog/the-theory-of-constraints-in-software-development/
+[stakeholder-url]: https://www.geeksforgeeks.org/software-engineering-stakeholder/#:~:text=In%20simple%20words%2C%20anyone%20having,the%20outcome%20of%20the%20project%E2%80%9D.
+[scope-url]: https://practice.geeksforgeeks.org/problems/what-is-software-scope#:~:text=Software%2DEngineering,a%20part%20of%20the%20software.
+[typerequirement-url]: https://www.geeksforgeeks.org/software-engineering-classification-of-software-requirements/
+[requirementengineering-url]: https://www.geeksforgeeks.org/software-engineering-requirements-engineering-process/
+[requirementmanagement-url]: https://ecomputernotes.com/software-engineering/requirementsmanagementprocess
+[artifact-url]: https://artifacts.ai/what-is-an-artifact/
+[treestructure-url]: https://www.javatpoint.com/tree
+[scrumpriorization-url]: http://blog.scrumstudy.com/what-is-prioritization-in-scrum/
+[requirementvolatility-url]: https://stackoverflow.blog/2020/02/20/requirements-volatility-is-the-core-problem-of-software-engineering/
+[scrumchanges-url]: http://blog.scrumstudy.com/how-are-changes-to-a-sprint-managed-in-scrum/
+[wasa-url]: https://www.youtube.com/watch?v=kmJ59yyYza4
+[scopecreepvideo-url]: https://www.youtube.com/watch?v=AHSjpFUKQR4
+[estimation-url]: https://www.tutorialspoint.com/estimation_techniques/estimation_techniques_overview.htm
+[wag-url]: https://searchsoftwarequality.techtarget.com/definition/WAG-estimate
+[analogy-url]: https://www.tutorialspoint.com/estimation_techniques/estimation_techniques_analogous.htm
+[experts-url]: https://educatech.in/explain-expert-judgment-technique/
+[wideband-url]: https://www.stellman-greene.com/LectureNotes/03%20estimation.pdf
+[planingpoker-url]: https://www.mountaingoatsoftware.com/agile/planning-poker
+[bottomup-url]: http://rpl-blog.blogspot.com/2010/03/412-bottom-up-estimation-approach.html
+[toolestimation-url]: https://github.com/vitorstabile/master-software-engineering/raw/main/semester1/Managing%20Software%20Development/class4/Estimation_Bottom-up_Form_v1.0.xls
+[whatsisrisk-url]: https://www.test-institute.org/What_Is_Software_Risk_And_Software_Risk_Management.php
+[riskmanagement1-url]: https://www.geeksforgeeks.org/software-engineering-risk-management/
+[riskmanagement2-url]: https://www.test-institute.org/What_Is_Software_Risk_And_Software_Risk_Management.php
+[continuousriskmanagementcycle-url]: https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.194.6418&rep=rep1&type=pdf
