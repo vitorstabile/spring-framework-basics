@@ -65,7 +65,7 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: Bc
 
-## Bibliography's <a name="biblio"></a>
+## <a name="biblio"></a>Bibliography's 
 
 Some of references that I use.
 
