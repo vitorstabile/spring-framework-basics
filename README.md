@@ -8,10 +8,10 @@
     - [Chapter 1 - Part 3: Applications of Spring](#chapter1part3)
     - [Chapter 1 - Part 4: Applications of Spring](#chapter1part4)
     - [Chapter 1 - Part 5: Applications of Spring](#chapter1part5)
-2. [Chapter 2: B](#chapter2)
+2. [Chapter 2: Knowing Spring Framework](#chapter2)
     - [Chapter 2 - Part 1: Ba](#chapter2part1)
     - [Chapter 2 - Part 2: Bb](#chapter2part2)
-    - [Chapter 2 - Part 3: Bc](#chapter2part3)
+    - [Chapter 2 - Part 3: First Project](#chapter2part3)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -57,13 +57,13 @@ Spring provides a handy API for converting technology-specific exceptions (such 
 
 IoC containers are typically lightweight, especially when compared to EJB containers, for example. This is useful for creating and distributing programmes on systems with limited memory and CPU resources.
 
-## <a name="chapter2"></a>Chapter 2: B
+## <a name="chapter2"></a>Chapter 2: Knowing Spring Framework
   
 #### <a name="chapter2part1"></a>Chapter 2 - Part 1: Ba
 
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Bb
 
-#### <a name="chapter2part3"></a>Chapter 2 - Part 3: Bc
+#### <a name="chapter2part3"></a>Chapter 2 - Part 3: First Project
 
 ## <a name="biblio"></a>Bibliography's 
 
