@@ -73,7 +73,7 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 We will create a Java Code that is very tightly Coupled to demonstrate the concepts of Tightly and Loose Coupled Code.
 
-- Is necessary to build a class that has the ability to run games, in this case, Mario, SuperContra and Pacman
+- Is necessary to build a class that has the ability to run games, in this case, Mario, SuperContra and Pacman. Let's design a model to this:
 
 <br>
 
@@ -81,8 +81,102 @@ We will create a Java Code that is very tightly Coupled to demonstrate the conce
 
 <br>
 
+The GameRunner Class
+
+```java
+public class GameRunner {
+	MarioGame game;
+	
+	public GameRunner(MarioGame game) {
+		this.game = game;
+	}
+
+	public void run() {
+		
+		System.out.println("Running game: " + game);
+		game.up();
+		game.down();
+		game.left();
+		game.right();
+		
+	}
+
+}
+```
+
+The MarioGame Class
+
+```java
+public class MarioGame {
+	
+	public void up() {
+		System.out.println("Jump");
+	}
+
+	public void down() {
+		System.out.println("Go into a hole");
+	}
+	
+	public void left() {
+		System.out.println("Go back");
+	}
+
+	public void right() {
+		System.out.println("Accelerate");
+	}
 
 
+}
+```
+
+The SuperContra Class
+
+```java
+public class SuperContraGame {
+
+	public void up() {
+		System.out.println("up");
+	}
+
+	public void down() {
+		System.out.println("Sit down");
+	}
+	
+	public void left() {
+		System.out.println("Go back");
+	}
+
+	public void right() {
+		System.out.println("Shoot a bullet");
+	}
+
+}
+```
+
+The Pacman Class
+
+```java
+public class PacmanGame {
+	
+	public void up() {
+		System.out.println("up");
+	}
+
+	public void down() {
+		System.out.println("down");
+	}
+	
+	public void left() {
+		System.out.println("left");
+	}
+
+	public void right() {
+		System.out.println("right");
+	}
+
+
+}
+```
 
 <br>
 
