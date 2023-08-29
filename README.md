@@ -12,6 +12,8 @@
     - [Chapter 2 - Part 1: Ba](#chapter2part1)
     - [Chapter 2 - Part 2: Bb](#chapter2part2)
     - [Chapter 2 - Part 3: First Project](#chapter2part3)
+3. [Chapter 3: Spring Container](#chapter3)
+    - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -55,7 +57,7 @@ Spring provides a handy API for converting technology-specific exceptions (such 
 
 - **Lightweight**
 
-IoC containers are typically lightweight, especially when compared to EJB containers, for example. This is useful for creating and distributing programmes on systems with limited memory and CPU resources.
+IoC containers are typically lightweight, especially when compared to EJB containers, for example. This is useful for creating and distributing programs on systems with limited memory and CPU resources.
 
 ## <a name="chapter2"></a>Chapter 2: Knowing Spring Framework
   
@@ -64,6 +66,30 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Bb
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: First Project
+
+## <a name="chapter3"></a>Chapter 3: Spring Container
+  
+#### <a name="chapter2part1"></a>Chapter 3 - Part 1: Tightly Coupled Java Code
+
+We will create a Java Code that is very tightly Coupled to demonstrate the concepts of Tightly and Loose Coupled Code.
+
+- Is necessary to build a class that has the ability to run games, in this case, Mario, SuperContra and Pacman
+
+<br>
+
+<div align="center"><img src="img/tightlycoupled-w679-h388.png" width=679 height=388><br><sub>Tightly Coupled Design Code - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+
+
+
+<br>
+
+<div align="center"><img src="img/loosecoupled-w716-h320.png" width=716 height=320><br><sub>Loose Coupled Design Code - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
 
 ## <a name="biblio"></a>Bibliography's 
 
