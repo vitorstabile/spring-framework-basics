@@ -14,6 +14,7 @@
     - [Chapter 2 - Part 3: First Project](#chapter2part3)
 3. [Chapter 3: Spring Container](#chapter3)
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
+    - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part1)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -69,7 +70,7 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 ## <a name="chapter3"></a>Chapter 3: Spring Container
   
-#### <a name="chapter2part1"></a>Chapter 3 - Part 1: Tightly Coupled Java Code
+#### <a name="chapter3part1"></a>Chapter 3 - Part 1: Tightly Coupled Java Code
 
 We will create a Java Code that is very tightly Coupled to demonstrate the concepts of Tightly and Loose Coupled Code.
 
@@ -173,16 +174,203 @@ public class PacmanGame {
 	public void right() {
 		System.out.println("right");
 	}
+}
+```
 
+Looking to the class GameRunner, he is MarioGame Tightly Coupled with the GameRunner Class.
+
+```java
+public class AppGamingBasicJava {
+
+	public static void main(String[] args) {
+		
+		var marioGame = new MarioGame();
+		var gameRunner = new GameRunner(marioGame);
+		gameRunner.run();
+
+	}
 
 }
 ```
+
+If we want to run the Supercontra game, we have to change the GameRunner class to SuperContra game
+
+```java
+public class GameRunner {
+	//MarioGame game;
+	SuperContraGame game;
+	
+	public GameRunner(SuperContraGame game) {
+		this.game = game;
+	}
+
+	public void run() {
+		
+		System.out.println("Running game: " + game);
+		game.up();
+		game.down();
+		game.left();
+		game.right();
+		
+	}
+
+}
+```
+
+```java
+public class AppGamingBasicJava {
+
+	public static void main(String[] args) {
+		
+		//var marioGame = new MarioGame();
+		var superContraGame = new SuperContraGame();
+		var gameRunner = new GameRunner(superContraGame);
+		gameRunner.run();
+
+	}
+
+}
+```
+
+Changing code because of new changes in requirements is something undesirable. We have to implement code thinking in reusable interfaces, implement the behaviors of an object and translate this to an interface. Let's modify this code to a more loosely coupled code.
+
+#### <a name="chapter3part2"></a>Chapter 3 - Part 2: Loosely Coupled Java Code
+
+Now, the classes MarioGame, SuperContraGame and PacmanGame will implement a Interface called GamingConsole the will implement the same methods of this classes.
 
 <br>
 
 <div align="center"><img src="img/loosecoupled-w716-h320.png" width=716 height=320><br><sub>Loose Coupled Design Code - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
 
 <br>
+
+```java
+public interface GamingConsole {
+	void up();
+	void down();
+	void left();
+	void right();
+}
+```
+
+Now, the classes will implement this interface
+
+The MarioGame Class
+
+```java
+public class MarioGame implements GamingConsole {
+	
+	public void up() {
+		System.out.println("Jump");
+	}
+
+	public void down() {
+		System.out.println("Go into a hole");
+	}
+	
+	public void left() {
+		System.out.println("Go back");
+	}
+
+	public void right() {
+		System.out.println("Accelerate");
+	}
+
+
+}
+```
+
+The SuperContra Class
+
+```java
+public class SuperContraGame implements GamingConsole {
+
+	public void up() {
+		System.out.println("up");
+	}
+
+	public void down() {
+		System.out.println("Sit down");
+	}
+	
+	public void left() {
+		System.out.println("Go back");
+	}
+
+	public void right() {
+		System.out.println("Shoot a bullet");
+	}
+
+}
+```
+
+The Pacman Class
+
+```java
+public class PacmanGame implements GamingConsole {
+	
+	public void up() {
+		System.out.println("up");
+	}
+
+	public void down() {
+		System.out.println("down");
+	}
+	
+	public void left() {
+		System.out.println("left");
+	}
+
+	public void right() {
+		System.out.println("right");
+	}
+}
+```
+
+Now, let's change the class GameRunner to receive the interface
+
+```java
+public class GameRunner {
+	private GamingConsole game;
+	
+	public GameRunner(GamingConsole game) {
+		this.game = game;
+	}
+
+	public void run() {
+		
+		System.out.println("Running game: " + game);
+		game.up();
+		game.down();
+		game.left();
+		game.right();
+		
+	}
+
+}
+```
+
+Now, independent of the gamming that will run, we don't need to change the GameRunner Class
+
+```java
+public class AppGamingBasicJava {
+
+	public static void main(String[] args) {
+		
+		//var game = new MarioGame();
+		//var game = new SuperContraGame();
+
+		var game = new PacmanGame(); //1: Object Creation
+		
+		var gameRunner = new GameRunner(game);
+			//2: Object Creation + Wiring of Dependencies
+			// Game is a Dependency of GameRunner
+		gameRunner.run();
+
+	}
+
+}
+```
 
 
 ## <a name="biblio"></a>Bibliography's 
