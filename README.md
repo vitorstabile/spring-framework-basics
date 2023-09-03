@@ -16,6 +16,7 @@
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
     - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
     - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
+    - [Chapter 3 - Part 4: Primary & Qualifier](#chapter3part4)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -677,6 +678,8 @@ The Spring Container is maniging all this beans to us
 
 <br>
 
+#### <a name="chapter3part3"></a>Chapter 3 - Part 4: Primary & Qualifier
+
 Imagine now that we have a another bean that will return another address. We will calling getAddress2
 
 ```java
@@ -732,9 +735,194 @@ We will get this error
 Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.appgame.beansexample.Address' available: expected single matching bean but found 2: getAddress,getAddress2
 ```
 
-The Spring is telling us, that they try to run the app, and found two beans that is qualifying to Address.class
+The Spring is telling us, that they try to run the app, and found two beans that is qualifying to Address.class to be autowiring. In other words, there two beans of same type and Spring don't no what beans has to manage, so we have to tell Spring what Bean is primary
 
-In this case, we need to tell Spring what is the Qualyfier or Primary bean in the initializing
+In this case, we need to tell Spring what is the Primary bean in the initializing
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+@ComponentScan(basePackageClasses = Company.class)
+public class Config {
+    @Primary
+    @Bean
+    public Address getAddress() {
+        return new Address("High Street", 1000);
+    }
+
+    @Bean
+    public Address getAddress2() {
+        return new Address("Lombard Street", 2100);
+    }
+}
+```
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+        //creating the context
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+
+        //calling the bean
+        System.out.println(context.getBean("getAddress"));
+
+        //calling the bean
+        System.out.println(context.getBean("getAddress2"));
+
+    }
+}
+```
+
+output
+```
+Address{street='High Street', number=1000}
+Address{street='Lombard Street', number=2100}
+```
+
+Now let's explain: See this reference by [chaos on StackOverFlow](https://stackoverflow.com/a/56644805)
+
+@Primary indicates that a bean should be given preference when multiple candidates are qualified to autowire a single-valued dependency.
+
+@Qualifier indicates specific bean should be autowired when there are multiple candidates.
+
+For example, we have two beans both implement the same interface.
+
+```java
+public interface BeanInterface {
+
+    String getName();
+}
+
+
+public class Bean1 implements BeanInterface {
+    @Override
+    public String getName() {
+        return "bean 1";
+    }
+}
+
+
+public class Bean2 implements BeanInterface {
+    @Override
+    public String getName() {
+        return "bean2";
+    }
+}
+```
+
+Here is our service.
+
+```java
+@Service
+public class BeanService {
+
+    @Autowired
+    private BeanInterface bean;
+}
+```
+
+And our configuration.
+
+```java
+@Configuration
+public class Config {
+
+    @Bean("bean1")
+    public BeanInterface bean1() {
+        return new Bean1();
+    }
+
+    @Bean("bean2")
+    public BeanInterface bean2() {
+        return new Bean2();
+    }
+}
+```
+
+When Spring starts, it will find there are two beans("bean1" and "bean2") both can be autowired to BeanService since they implement the same interface BeanInterface. It reports an error in my Idea.
+
+```
+Could not autowire. There is more than one bean of 'BeanInterface' type.
+Beans: bean1   (Config.java) 
+bean2   (Config.java)
+```
+
+And without a hint, Spring does not know which one to use.
+
+So in our case, when we add @Primary to Config.bean1().
+
+```java
+@Bean("bean1")
+@Primary
+public BeanInterface bean1() {
+    return new Bean1();
+}
+```
+
+It tells Spring, "when you find more than one beans that both can be autowired, please use the primary one as your first choose." So, Spring will pick bean1 to autowire to BeanService.
+
+Here is another way to autowire bean1 to BeanService by using @Qualifier in BeanService.class.
+
+```java
+@Service
+public class BeanService {
+
+    @Autowired
+    @Qualifier("bean1")
+    private BeanInterface bean;
+}
+```
+
+@Qualifier will tell Spring, "no matter how many beans you've found, just use the one I tell you."
+
+So you can find both @Qualifier and @Primary are telling Spring to use the specific bean when multiple candidates are qualified to autowire. But @Qualifier is more specific and has high priority. So when both @Qualifier and @Primary are found, @Primary will be ignored.
+
+Here is the test.
+
+```java
+@Configuration
+public class Config {
+
+    @Bean("bean1")
+    @Primary
+    public BeanInterface bean1() {
+        return new Bean1();
+    }
+
+    @Bean("bean2")
+    public BeanInterface bean2() {
+        return new Bean2();
+    }
+}
+
+@Service
+public class BeanService {
+
+    @Autowired
+    @Qualifier("bean2")
+    private BeanInterface bean;
+
+    @PostConstruct
+    public void test() {
+        String name = bean.getName();
+        System.out.println(name);
+    }
+}
+```
+
+The output is "bean2".
 
 ## <a name="biblio"></a>Bibliography's 
 
