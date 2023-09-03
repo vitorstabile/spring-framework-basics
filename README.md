@@ -287,11 +287,14 @@ Now, the classes MarioGame, SuperContraGame and PacmanGame will implement a Inte
 <br>
 
 ```java
+package com.appgame.game;
+
 public interface GamingConsole {
-	void up();
-	void down();
-	void left();
-	void right();
+
+    void up();
+    void down();
+    void left();
+    void right();
 }
 ```
 
@@ -300,23 +303,25 @@ Now, the classes will implement this interface
 The MarioGame Class
 
 ```java
+package com.appgame.game;
+
 public class MarioGame implements GamingConsole {
-	
-	public void up() {
-		System.out.println("Jump");
-	}
 
-	public void down() {
-		System.out.println("Go into a hole");
-	}
-	
-	public void left() {
-		System.out.println("Go back");
-	}
+    public void up() {
+        System.out.println("Jump");
+    }
 
-	public void right() {
-		System.out.println("Accelerate");
-	}
+    public void down() {
+        System.out.println("Go into a hole");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Accelerate");
+    }
 
 
 }
@@ -325,69 +330,76 @@ public class MarioGame implements GamingConsole {
 The SuperContra Class
 
 ```java
+package com.appgame.game;
+
 public class SuperContraGame implements GamingConsole {
 
-	public void up() {
-		System.out.println("up");
-	}
+    public void up() {
+        System.out.println("up");
+    }
 
-	public void down() {
-		System.out.println("Sit down");
-	}
-	
-	public void left() {
-		System.out.println("Go back");
-	}
+    public void down() {
+        System.out.println("Sit down");
+    }
 
-	public void right() {
-		System.out.println("Shoot a bullet");
-	}
+    public void left() {
+        System.out.println("Go back");
+    }
 
+    public void right() {
+        System.out.println("Shoot a bullet");
+    }
 }
 ```
 
 The Pacman Class
 
 ```java
+package com.appgame.game;
+
 public class PacmanGame implements GamingConsole {
-	
-	public void up() {
-		System.out.println("up");
-	}
 
-	public void down() {
-		System.out.println("down");
-	}
-	
-	public void left() {
-		System.out.println("left");
-	}
+    public void up() {
+        System.out.println("up");
+    }
 
-	public void right() {
-		System.out.println("right");
-	}
+    public void down() {
+        System.out.println("down");
+    }
+
+    public void left() {
+        System.out.println("left");
+    }
+
+    public void right() {
+        System.out.println("right");
+    }
+
 }
 ```
 
 Now, let's change the class GameRunner to receive the interface
 
 ```java
-public class GameRunner {
-	private GamingConsole game;
-	
-	public GameRunner(GamingConsole game) {
-		this.game = game;
-	}
+package com.appgame.game;
 
-	public void run() {
-		
-		System.out.println("Running game: " + game);
-		game.up();
-		game.down();
-		game.left();
-		game.right();
-		
-	}
+public class GameRunner {
+
+    private GamingConsole game;
+
+    public GameRunner(GamingConsole game) {
+        this.game = game;
+    }
+
+    public void run() {
+
+        System.out.println("Running game: " + game);
+        game.up();
+        game.down();
+        game.left();
+        game.right();
+
+    }
 
 }
 ```
