@@ -14,7 +14,8 @@
     - [Chapter 2 - Part 3: First Project](#chapter2part3)
 3. [Chapter 3: Spring Container](#chapter3)
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
-    - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part1)
+    - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
+    - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -428,6 +429,155 @@ public class AppGamingBasicJava {
 
 If we look to this code, the PacmanGame needs a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
 
+#### <a name="chapter3part3"></a>Chapter 3 - Part 3: Spring Bean and Spring IoC Container
+
+In Spring, the objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. In other words, a Spring Bean is objects manages be Spring IoC Container (Spring IoC).
+
+This definition is concise and gets to the point but fails to elaborate on an important element: the Spring IoC container. Let's take a closer look to see what it is and the benefits it brings in.
+
+**Inversion of Control**
+
+Simply put, Inversion of Control (IoC) is a process in which an object defines its dependencies without creating them. This object delegates the job of constructing such dependencies to an IoC container.
+
+Let's start with the declaration of a couple of domain classes before diving into IoC.
+
+Assume we have a class declaration:
+
+```java
+package com.appgame.beansexample;
+
+public class Company {
+    private Address address;
+
+    public Company(Address address) {
+        this.address = address;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "address=" + address +
+                '}';
+    }
+}
+```
+
+This class needs a collaborator of type Address:
+
+
+```java
+package com.appgame.beansexample;
+
+public class Address {
+    private String street;
+    private int number;
+
+    public Address(String street, int number) {
+        this.street = street;
+        this.number = number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", number=" + number +
+                '}';
+    }
+}
+```
+
+
+Normally, we create objects with their classes' constructors:
+
+```java
+package com.appgame.beansexample;
+
+public class App {
+
+    public static void main(String[] args) {
+
+        Address address = new Address("High Street", 1000);
+        Company company = new Company(address);
+        System.out.println(company);
+
+    }
+}
+```
+
+There's nothing wrong with this approach, but wouldn't it be nice to manage the dependencies in a better way?
+
+Imagine an application with dozens or even hundreds of classes. Sometimes we want to share a single instance of a class across the whole application, other times we need a separate object for each use case, and so on.
+
+Managing such a number of objects is nothing short of a nightmare. This is where inversion of control comes to the rescue.
+
+Instead of constructing dependencies by itself, an object can retrieve its dependencies from an IoC container. All we need to do is to provide the container with appropriate configuration metadata.
+
+First off, let's decorate the Company class with the @Component annotation:
+
+```java
+import org.springframework.stereotype.Component;
+
+@Component
+public class Company {
+    // this body is the same as before
+}
+```
+
+This annotion is telling spring that the class Component is a component to be manage by Spring
+
+Here's a configuration class supplying bean metadata to an IoC container:
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackageClasses = Company.class)
+public class Config {
+    @Bean
+    public Address getAddress() {
+        return new Address("High Street", 1000);
+    }
+}
+```
+
+The configuration class produces a bean of type Address. It also carries the @ComponentScan annotation, which instructs the container to look for beans in the package containing the Company class.
+
+When a Spring IoC container constructs objects of those types, all the objects are called Spring beans, as they are managed by the IoC container.
+
+Since we defined beans in a configuration class, we'll need an instance of the AnnotationConfigApplicationContext class to build up a container:
+
+```java
+
+```
 
 ## <a name="biblio"></a>Bibliography's 
 
