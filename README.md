@@ -548,7 +548,7 @@ public class Company {
 }
 ```
 
-This annotion is telling spring that the class Component is a component to be manage by Spring
+This annotion is telling spring that the class Company is a component to be manage by Spring
 
 Here's a configuration class supplying bean metadata to an IoC container:
 
@@ -576,8 +576,26 @@ When a Spring IoC container constructs objects of those types, all the objects a
 Since we defined beans in a configuration class, we'll need an instance of the AnnotationConfigApplicationContext class to build up a container:
 
 ```java
+package com.appgame.beansexample;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+        //creating the context
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+
+        //calling the bean
+        System.out.println(context.getBean("getAddress"));
+    }
+}
 ```
+
+What is happning her, is that spring is managing the beans that we create in the Config class. If we create a new method calling getAddress2, the spring will manage it
+
+
 
 ## <a name="biblio"></a>Bibliography's 
 
