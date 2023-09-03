@@ -593,9 +593,148 @@ public class App {
 }
 ```
 
-What is happning her, is that spring is managing the beans that we create in the Config class. If we create a new method calling getAddress2, the spring will manage it
+What is happning her, is that spring is managing the beans that we create in the Config class.
+
+Another way that we can calling a bean is putting the class, and the class and method
 
 
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+        //calling the bean
+        System.out.println(context.getBean("getAddress"));
+
+        //calling the bean
+        System.out.println(context.getBean(Address.class));
+
+        //calling the bean
+        System.out.println(context.getBean(Address.class, "getAddress"));
+
+        //calling the bean
+        System.out.println(context.getBean(Company.class));
+
+        //calling the bean
+        System.out.println(context.getBean(Company.class, "getAddress"));
+    }
+}
+```
+
+output
+```
+Address{street='High Street', number=1000}
+Address{street='High Street', number=1000}
+Address{street='High Street', number=1000}
+Company{address=Address{street='High Street', number=1000}}
+Company{address=Address{street='High Street', number=1000}}
+```
+
+Is possible to list wich beans spring is managing
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Arrays;
+
+public class App {
+
+    public static void main(String[] args) {
+        //creating the context
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+
+        Arrays.stream(context.getBeanDefinitionNames())
+			.forEach(System.out::println);
+
+    }
+}
+```
+
+output
+```
+org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+org.springframework.context.annotation.internalAutowiredAnnotationProcessor
+org.springframework.context.annotation.internalCommonAnnotationProcessor
+org.springframework.context.event.internalEventListenerProcessor
+org.springframework.context.event.internalEventListenerFactory
+config
+company
+getAddress
+```
+
+The Spring Container is maniging all this beans to us
+
+<br>
+
+<div align="center"><img src="img/springcontainer-w531-h381.png" width=531 height=381><br><sub>Spring IoC Container Maniging - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+Imagine now that we have a another bean that will return another address. We will calling getAddress2
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+@ComponentScan(basePackageClasses = Company.class)
+public class Config {
+
+    @Bean
+    public Address getAddress() {
+        return new Address("High Street", 1000);
+    }
+
+    @Bean
+    public Address getAddress2() {
+        return new Address("Lombard Street", 2100);
+    }
+}
+```
+
+and we try to run the app
+
+```java
+package com.appgame.beansexample;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+        //creating the context
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+
+        //calling the bean
+        System.out.println(context.getBean("getAddress"));
+
+        System.out.println(context.getBean("getAddress2"));
+
+    }
+}
+```
+
+We will get this error
+
+```
+Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.appgame.beansexample.Address' available: expected single matching bean but found 2: getAddress,getAddress2
+```
+
+The Spring is telling us, that they try to run the app, and found two beans that is qualifying to Address.class
+
+In this case, we need to tell Spring what is the Qualyfier or Primary bean in the initializing
 
 ## <a name="biblio"></a>Bibliography's 
 
