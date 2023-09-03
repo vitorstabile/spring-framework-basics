@@ -84,7 +84,12 @@ Go to [Spring Initializr](https://start.spring.io/) and select the following:
    - For Spring Boot 3.x -> Java Version 8
 - **Dependencies**
 
-- 
+<br>
+
+<div align="center"><img src="img/springframeworkconfig-w1598-h747.png" width=1598 height=747><br><sub>Spring Framework Download - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
 
 ## <a name="chapter3"></a>Chapter 3: Spring Container
   
