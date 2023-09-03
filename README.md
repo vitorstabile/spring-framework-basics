@@ -90,6 +90,25 @@ Go to [Spring Initializr](https://start.spring.io/) and select the following:
 
 <br>
 
+Go to your IDE (Eclipse or IntelliJ) and open the downloaded file as Maven project and wait to the IDE download the dependencies.
+
+ <br>
+
+<div align="center"><img src="img/openapp-w1100-h597.png" width=1100 height=597><br><sub>Open App - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+After the dowload be completed, run the application and see if the logs is ok. The application will exit because don't have the SpringBoot Starte Application Server config
+
+ <br>
+
+<div align="center"><img src="img/runapp-w1100-h597.png" width=1100 height=597><br><sub>How to run a App - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+<div align="center"><img src="img/logsapp-w1798-h773.png" width=1798 height=773><br><sub>App Logs - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
 
 ## <a name="chapter3"></a>Chapter 3: Spring Container
   
