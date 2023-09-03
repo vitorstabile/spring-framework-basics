@@ -678,7 +678,7 @@ The Spring Container is maniging all this beans to us
 
 <br>
 
-#### <a name="chapter3part3"></a>Chapter 3 - Part 4: Primary & Qualifier
+#### <a name="chapter3part4"></a>Chapter 3 - Part 4: Primary & Qualifier
 
 Imagine now that we have a another bean that will return another address. We will calling getAddress2
 
