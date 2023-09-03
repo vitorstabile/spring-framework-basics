@@ -390,7 +390,7 @@ public class AppGamingBasicJava {
 }
 ```
 
-If we look to this code, the PacmanGame needs a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner)
+If we look to this code, the PacmanGame needs a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
 
 
 ## <a name="biblio"></a>Bibliography's 
