@@ -68,6 +68,24 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: First Project
 
+Go to [Spring Initializr](https://start.spring.io/) and select the following:
+
+- **Project**
+   - Maven Project
+- **Language**
+   - Java
+- **Spring Boot Version**
+   - For Java Version 8 -> Spring Boot 2.x
+   - For Java Version 17 -> Spring Boot 3.x
+- **Packaging**
+   - Jar
+- **Java**
+   - For Spring Boot 2.x -> Java Version 8
+   - For Spring Boot 3.x -> Java Version 8
+- **Dependencies**
+
+- 
+
 ## <a name="chapter3"></a>Chapter 3: Spring Container
   
 #### <a name="chapter3part1"></a>Chapter 3 - Part 1: Tightly Coupled Java Code
