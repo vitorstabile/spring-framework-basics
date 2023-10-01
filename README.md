@@ -1117,7 +1117,7 @@ public class GameRunner {
     private GamingConsole game;
 
     public GameRunner(GamingConsole game) {
-        this.game = game;
+        this.game = game;One or Many - You can create as many as
     }
 
     public void run() {
