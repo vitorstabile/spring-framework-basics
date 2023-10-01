@@ -18,7 +18,7 @@
     - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
     - [Chapter 3 - Part 4: What is Spring Container](#chapter3part4)
     - [Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean](#chapter3part5)
-    - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6
+    - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
