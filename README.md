@@ -16,7 +16,8 @@
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
     - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
     - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
-    - [Chapter 3 - Part 4: Primary & Qualifier](#chapter3part4)
+    - [Chapter 3 - Part 4: POJO vs Java Bean vs Spring Bean](#chapter3part4)
+    - [Chapter 3 - Part 5: Primary & Qualifier](#chapter3part5)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -678,7 +679,71 @@ The Spring Container is maniging all this beans to us
 
 <br>
 
-#### <a name="chapter3part4"></a>Chapter 3 - Part 4: Primary & Qualifier
+#### <a name="chapter3part4"></a>Chapter 3 - Part 4: POJO vs Java Bean vs Spring Bean
+
+**POJO:** POJO in Java stands for Plain Old Java Object. It is an ordinary object, which is not bound by any special restriction. The POJO file does not require any special classpath. It increases the readability & re-usability of a Java program. Any Object create in Java is a POJO.
+
+```java
+public class Pojo {
+    
+    private String text;
+
+    private int number;
+
+    public String toString() {
+        return text + ":" + number;
+    }
+}
+```
+
+**Java Bean:** Java Bean class is also an object class that encapsulates several objects into a single file ( Bean Class File). There are some differences between POJO and Bean.
+
+- All JavaBeans are POJOs but not all POJOs are JavaBeans.
+- Serializable i.e. they should implement Serializable interface. Still, some POJOs who don’t implement a Serializable interface are called POJOs because Serializable is a marker interface and therefore not of many burdens.
+- Fields should be private. This is to provide complete control on fields.
+- Fields should have getters or setters or both.
+- A no-arg constructor should be there in a bean.
+- Fields are accessed only by constructor or getter setters.
+
+```java
+import java.io.Serializable;
+
+public class JavaBean implements Serializable {
+
+    //1: public no-arg constructor
+    public JavaBean() {
+
+    }
+    private String text;
+
+    private int number;
+
+    //2: getters and setters
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
+}
+
+```
+
+**Spring Bean:** Is Any Java Object that is managed by Spring
+
+- Spring user IOC Container (Bean Factory or Application Context) to manage these objects
+
+#### <a name="chapter3part5"></a>Chapter 3 - Part 5: Primary & Qualifier
 
 Imagine now that we have a another bean that will return another address. We will calling getAddress2
 
