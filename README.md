@@ -19,6 +19,7 @@
     - [Chapter 3 - Part 4: What is Spring Container](#chapter3part4)
     - [Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean](#chapter3part5)
     - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6)
+    - [Chapter 3 - Part 7: Our Java Code with Spring](#chapter3part7)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -982,138 +983,159 @@ Address{street='High Street', number=1000}
 Address{street='Lombard Street', number=2100}
 ```
 
-Now let's explain: See this reference by [chaos on StackOverFlow](https://stackoverflow.com/a/56644805)
-
-@Primary indicates that a bean should be given preference when multiple candidates are qualified to autowire a single-valued dependency.
-
-@Qualifier indicates specific bean should be autowired when there are multiple candidates.
-
-For example, we have two beans both implement the same interface.
+Let's imagine that I'm Writing a Complex Algorithm (ComplexAlgorithm Class) that make use of different Sorting Algorithms (QuickSort, BubleSort or RadixSort Classes). There is Another Complex Algorithm that have use of Sorting Algorithms too. How to use @Primary and @Qualifier annotations?
 
 ```java
-public interface BeanInterface {
 
-    String getName();
-}
-
-
-public class Bean1 implements BeanInterface {
-    @Override
-    public String getName() {
-        return "bean 1";
-    }
-}
-
-
-public class Bean2 implements BeanInterface {
-    @Override
-    public String getName() {
-        return "bean2";
-    }
-}
-```
-
-Here is our service.
-
-```java
-@Service
-public class BeanService {
-
-    @Autowired
-    private BeanInterface bean;
-}
-```
-
-And our configuration.
-
-```java
-@Configuration
-public class Config {
-
-    @Bean("bean1")
-    public BeanInterface bean1() {
-        return new Bean1();
-    }
-
-    @Bean("bean2")
-    public BeanInterface bean2() {
-        return new Bean2();
-    }
-}
-```
-
-When Spring starts, it will find there are two beans("bean1" and "bean2") both can be autowired to BeanService since they implement the same interface BeanInterface. It reports an error in my Idea.
-
-```
-Could not autowire. There is more than one bean of 'BeanInterface' type.
-Beans: bean1   (Config.java) 
-bean2   (Config.java)
-```
-
-And without a hint, Spring does not know which one to use.
-
-So in our case, when we add @Primary to Config.bean1().
-
-```java
-@Bean("bean1")
+@Component
 @Primary
-public BeanInterface bean1() {
-    return new Bean1();
+class QuickSort implement SortingAlgorithm {}
+
+@Component
+class BubleSort implement SortingAlgorithm {}
+
+@Component
+@Qualifier("RadixSortQualifier")
+class RadixSort implement SortingAlgorithm {}
+
+@Component
+class ComplexAlgorithm {
+
+@Autowired
+private SortingAlgorithm algorithm;
+
 }
+
+@Component
+class AnotherComplexAlgorithm {
+
+@Autowired
+@Qualifier("RadixSortQualifier")
+private SortingAlgorithm iWantToUseRadixSortOnly;
+
+}
+
 ```
 
-It tells Spring, "when you find more than one beans that both can be autowired, please use the primary one as your first choose." So, Spring will pick bean1 to autowire to BeanService.
+@Primary - A bean should be given preference when multiple candidates are qualified. 
 
-Here is another way to autowire bean1 to BeanService by using @Qualifier in BeanService.class.
+@Qualifier - A specific bean should be auto-wired (name of the bean can be used as qualifier)
+
+In the example bellow, the ComplexAlgorithm class, will make use of the the Primary SortingAlgorithin, in this case the QuickSort. If there is 10 canditates to be a SortingAlgorithm, they will take the primary, because is just using the @Autowired annotation
+
+The AnotherComplexAlgorithm class is making use of @Qualifier annotation in his method. In this case, he will just use the Candidate that is using the Annotation Qualifier.
+
+ALWAYS think from the perspective of the class using the SortingAlgorithm:
+
+- Just @Autowired: Give me (preferred) SortingAlgorithm
+- @Autowired + @Qualifier: I only want to use the specific SortingAlgorithm - RadixSort
+
+#### <a name="chapter3part7"></a>Chapter 3 - Part 7: Our Java Code with Spring
+
+Now, let's apply the Spring to our Java Code Game App.
+
+Just to remember, we have this cenario we have this
+
+<br>
+
+<div align="center"><img src="img/loosecoupled-w716-h320.png" width=716 height=320><br><sub>Loose Coupled Design Code - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+Our interface GamingConsole
 
 ```java
-@Service
-public class BeanService {
+package com.appgame.game;
 
-    @Autowired
-    @Qualifier("bean1")
-    private BeanInterface bean;
+public interface GamingConsole {
+
+    void up();
+    void down();
+    void left();
+    void right();
 }
 ```
 
-@Qualifier will tell Spring, "no matter how many beans you've found, just use the one I tell you."
+And this interface will be implemented to our classes PacmanGame, Mariogame and SuperContraGame
 
-So you can find both @Qualifier and @Primary are telling Spring to use the specific bean when multiple candidates are qualified to autowire. But @Qualifier is more specific and has high priority. So when both @Qualifier and @Primary are found, @Primary will be ignored.
-
-Here is the test.
+PacmanGame
 
 ```java
-@Configuration
-public class Config {
+package com.appgame.game;
 
-    @Bean("bean1")
-    @Primary
-    public BeanInterface bean1() {
-        return new Bean1();
+public class PacmanGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("up");
     }
 
-    @Bean("bean2")
-    public BeanInterface bean2() {
-        return new Bean2();
+    public void down() {
+        System.out.println("down");
     }
+
+    public void left() {
+        System.out.println("left");
+    }
+
+    public void right() {
+        System.out.println("right");
+    }
+
 }
+```
 
-@Service
-public class BeanService {
+MarioGame
 
-    @Autowired
-    @Qualifier("bean2")
-    private BeanInterface bean;
+```java
+package com.appgame.game;
 
-    @PostConstruct
-    public void test() {
-        String name = bean.getName();
-        System.out.println(name);
+public class MarioGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("Jump");
+    }
+
+    public void down() {
+        System.out.println("Go into a hole");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Accelerate");
+    }
+
+
+}
+```
+
+SuperContraGame
+
+```java
+package com.appgame.game;
+
+public class SuperContraGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("up");
+    }
+
+    public void down() {
+        System.out.println("Sit down");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Shoot a bullet");
     }
 }
 ```
 
-The output is "bean2".
 
 ## <a name="biblio"></a>Bibliography's 
 
