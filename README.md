@@ -1846,7 +1846,7 @@ The Spring recomend to use the Construct Base
 
 #### <a name="chapter3part10"></a>Chapter 3 - Part 10: @Component vs @Bean
 
-    | Heading             | @Component                                                      | @Bean                                                                            | 
+    | Heading             | Component                                                       | Bean                                                                             | 
     |:--------------------|:----------------------------------------------------------------|:-------------------------------------------------------------------------------- |
     | Where?              | Can be used on any Java class                                   | Typically used on methods in Spring Configuration classes                        |
     | Ease of use         | Very easy. Just add an annotation.                              | You write all the code.                                                          |
