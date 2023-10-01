@@ -21,6 +21,8 @@
     - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6)
     - [Chapter 3 - Part 7: Our Java Code with Spring](#chapter3part7)
     - [Chapter 3 - Part 8: Different Types of Dependency Injections](#chapter3part8)
+    - [Chapter 3 - Part 9: Important Terminology](#chapter3part9)
+    - [Chapter 3 - Part 10: @Component vs @Bean@Com](#chapter3part10)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -776,7 +778,7 @@ ApplicationContext context = new AnnotationConfigApplicationContext(Config.class
 #### <a name="chapter3part5"></a>Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean
 
 **POJO:** POJO in Java stands for Plain Old Java Object. It is an ordinary object, which is not bound by any special restriction. The POJO file does not require any special classpath. It increases the readability & re-usability of a Java program. Any Object create in Java is a POJO.
-
+Important Terminology
 ```java
 public class Pojo {
     
@@ -996,6 +998,8 @@ ALWAYS think from the perspective of the class using the SortingAlgorithm:
 
 - Just @Autowired: Give me (preferred) SortingAlgorithm
 - @Autowired + @Qualifier: I only want to use the specific SortingAlgorithm - RadixSort
+
+The Qualifier have preference over Primary
 
 #### <a name="chapter3part7"></a>Chapter 3 - Part 7: Our Java Code with Spring
 
@@ -1823,6 +1827,24 @@ Using com.appgame.injection.Dependency1@5136d012 and com.appgame.injection.Depen
 
 The Spring recomend to use the Construct Base
 
+
+#### <a name="chapter3part9"></a>Chapter 3 - Part 9: Important Terminology
+
+- **@Component (..):** An instance of class will be managed by Spring framework
+  
+- **Dependency:** GameRunner needs GamingConsole implementation!
+  - GamingConsole Impl (Ex: MarioGame) is a dependency of GameRunne
+ 
+- **Component Scan:** How does Spring Framework find component classes?
+  - It scans packages! (@ComponentScan("com.appgame.game")
+ 
+- **Dependency Injection:** dentify beans, their dependencies and wire them together (provides IOC - Inversion of Control)
+  - **Spring Beans:** An object managed by Spring Framework
+  - **IoC container:** Manages the lifecycle of beans and dependencies
+    - **Types:** ApplicationContext (complex), BeanFactory (simpler features - rarely used)
+  - **Autowiring:** Process of wiring in dependencies for a Spring Bean
+
+#### <a name="chapter3part10"></a>Chapter 3 - Part 10: @Component vs @Bean
 
 ## <a name="biblio"></a>Bibliography's 
 
