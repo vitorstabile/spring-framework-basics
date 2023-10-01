@@ -20,6 +20,7 @@
     - [Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean](#chapter3part5)
     - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6)
     - [Chapter 3 - Part 7: Our Java Code with Spring](#chapter3part7)
+    - [Chapter 3 - Part 8: Different Types of Dependency Injections](#chapter3part8)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -1599,6 +1600,229 @@ Go into a hole
 Go back
 Accelerate
 ```
+
+#### <a name="chapter3part8"></a>Chapter 3 - Part 8: Different Types of Dependency Injections
+
+There three types of dependecy injection
+
+- **Constructor-based:** Dependencies are set by creating the Bean using its Constructor
+
+- **Setter-based:** Dependencies are set by calling setter methods on ypur beans
+
+  
+
+- **Field:** No setter or constructor. Dependency is injected using reflection
+
+To illustrate this examples, let's make this code
+
+```java
+package com.appgame.injection;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+@Component
+class YourBusinessClass {
+
+}
+
+@Component
+class Dependency1 {
+
+}
+
+@Component
+class Dependency2 {
+
+}
+
+@Configuration
+@ComponentScan
+public class DepInjectionLauncherApplication {
+
+    public static void main(String[] args) {
+
+        try (var context = new AnnotationConfigApplicationContext(DepInjectionLauncherApplication.class)) {
+
+            Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+            System.out.println(context.getBean(YourBusinessClass.class));
+
+        }
+    }
+}
+```
+
+The output will be
+
+```
+depInjectionLauncherApplication
+dependency1
+dependency2
+yourBusinessClass
+com.appgame.injection.YourBusinessClass@157853da
+```
+
+If we modify our class YourBusinessClass, to use the dependecies with setter
+
+```java
+@Component
+class YourBusinessClass {
+
+    Dependency1 dependency1;
+    Dependency2 dependency2;
+
+    public String toString() {
+        return "Using " + dependency1 + " and " + dependency2;
+    }
+
+}
+```
+
+The output if we run will be
+
+```
+Using null and null
+```
+
+This is because we need to use a annotation @Autowired
+
+```java
+@Component
+class YourBusinessClass {
+
+    @Autowired
+    Dependency1 dependency1;
+    @Autowired
+    Dependency2 dependency2;
+
+    public String toString() {
+        return "Using " + dependency1 + " and " + dependency2;
+    }
+
+}
+```
+
+Now, the output will be
+
+```
+Using com.appgame.injection.Dependency1@55b53d44 and com.appgame.injection.Dependency2@482bce4f
+```
+
+This is called, **field injection**
+
+Now, let's modify, using setters in YourBusinessClass
+
+```java
+@Component
+class YourBusinessClass {
+
+    Dependency1 dependency1;
+
+    Dependency2 dependency2;
+
+
+    @Autowired
+    public void setDependency1(Dependency1 dependency1) {
+        System.out.println("Setter Injection - setDependency1 ");
+        this.dependency1 = dependency1;
+    }
+
+
+    @Autowired
+    public void setDependency2(Dependency2 dependency2) {
+        System.out.println("Setter Injection - setDependency2 ");
+        this.dependency2 = dependency2;
+    }
+
+    public String toString() {
+        return "Using " + dependency1 + " and " + dependency2;
+    }
+
+}
+```
+
+The output will be
+
+```
+Setter Injection - setDependency1 
+Setter Injection - setDependency2
+Using com.appgame.injection.Dependency1@272ed83b and com.appgame.injection.Dependency2@41fecb8b
+```
+
+This is called, **Setter-based**
+
+If we modify our class YourBusinessClass, to use the dependecies with constructors
+
+```java
+@Component
+class YourBusinessClass {
+
+    Dependency1 dependency1;
+
+    Dependency2 dependency2;
+
+    @Autowired
+    public YourBusinessClass(Dependency1 dependency1, Dependency2 dependency2) {
+        super();
+        System.out.println("Constructor Injection - YourBusinessClass ");
+        this.dependency1 = dependency1;
+        this.dependency2 = dependency2;
+    }
+
+    public String toString() {
+        return "Using " + dependency1 + " and " + dependency2;
+    }
+
+}
+```
+
+the output will be
+
+```java
+Constructor Injection - YourBusinessClass
+Using com.appgame.injection.Dependency1@770d3326 and com.appgame.injection.Dependency2@4cc8eb05
+```
+
+This is called, **Constructor-based**
+
+Is not necessary the Autowired annotation, for this, we can remove in the Constructor-based injection
+
+```java
+@Component
+class YourBusinessClass {
+
+    Dependency1 dependency1;
+
+    Dependency2 dependency2;
+
+    public YourBusinessClass(Dependency1 dependency1, Dependency2 dependency2) {
+        super();
+        System.out.println("Constructor Injection - YourBusinessClass ");
+        this.dependency1 = dependency1;
+        this.dependency2 = dependency2;
+    }
+
+    public String toString() {
+        return "Using " + dependency1 + " and " + dependency2;
+    }
+
+}
+```
+
+the output will be
+
+```java
+Constructor Injection - YourBusinessClass
+Using com.appgame.injection.Dependency1@5136d012 and com.appgame.injection.Dependency2@5939a379
+```
+
+The Spring recomend to use the Construct Base
+
 
 ## <a name="biblio"></a>Bibliography's 
 
