@@ -16,8 +16,9 @@
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
     - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
     - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
-    - [Chapter 3 - Part 4: POJO vs Java Bean vs Spring Bean](#chapter3part4)
-    - [Chapter 3 - Part 5: Primary & Qualifier](#chapter3part5)
+    - [Chapter 3 - Part 4: What is Spring Container](#chapter3part4)
+    - [Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean](#chapter3part5)
+    - [Chapter 3 - Part 6: Primary & Qualifier](#chapter3part6
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -197,7 +198,36 @@ public class SuperContraGame {
 	}
 
 }
-```
+```import java.io.Serializable;
+
+public class JavaBean implements Serializable {
+
+    //1: public no-arg constructor
+    public JavaBean() {
+
+    }
+    private String text;
+
+    private int number;
+
+    //2: getters and setters
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
+}
 
 The Pacman Class
 
@@ -429,7 +459,36 @@ public class AppGamingBasicJava {
 }
 ```
 
-If we look to this code, the PacmanGame needs a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
+If we look to this code, the PacmanGame neimport java.io.Serializable;
+
+public class JavaBean implements Serializable {
+
+    //1: public no-arg constructor
+    public JavaBean() {
+
+    }
+    private String text;
+
+    private int number;
+
+    //2: getters and setters
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
+}eds a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
 
 #### <a name="chapter3part3"></a>Chapter 3 - Part 3: Spring Bean and Spring IoC Container
 
@@ -605,7 +664,36 @@ package com.appgame.beansexample;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import java.io.Serializable;
 
+public class JavaBean implements Serializable {
+
+    //1: public no-arg constructor
+    public JavaBean() {
+
+    }
+    private String text;
+
+    private int number;
+
+    //2: getters and setters
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
+}
 public class App {
 
     public static void main(String[] args) {
@@ -679,7 +767,39 @@ The Spring Container is maniging all this beans to us
 
 <br>
 
-#### <a name="chapter3part4"></a>Chapter 3 - Part 4: POJO vs Java Bean vs Spring Bean
+#### <a name="chapter3part4"></a>Chapter 3 - Part 4: What is Spring Container
+
+**Spring Container:** is the one that manages Spring Beans and their lifecycle. Can be reference as Spring Context or IoC Container. too
+
+In the example above, we created a Config Class, that received the annotation @Configuration, and the class Company received the annotation @Component, telling that class is a component to be manage by Spring.
+
+When we create the classes and the configuration, the IoC Container will create the Run time System for us and will manage all beans.
+
+<br>
+
+<div align="center"><img src="img/ioccontainer-w569-h438.png" width=569 height=438><br><sub>Spring IoC Container System - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+There are two types of Spring Container
+
+- **Bean Factory:** Available in org.springframework.beans.factory package. Basic Spring Container
+
+```java
+ClassPathResource resource = new ClassPathResource("beans.xml");
+XmlBeanFactory factory = new XmlBeanFactory(resource);
+```
+
+- **Application Context:** Available in org.springframework.context package. Advanced Spring Container with enterprise-specific features
+   - Easy to use in web applications
+   - Easy internationalization
+   - Easy integration with Spring AOP
+
+ ```java
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+```
+
+#### <a name="chapter3part5"></a>Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean
 
 **POJO:** POJO in Java stands for Plain Old Java Object. It is an ordinary object, which is not bound by any special restriction. The POJO file does not require any special classpath. It increases the readability & re-usability of a Java program. Any Object create in Java is a POJO.
 
@@ -743,7 +863,7 @@ public class JavaBean implements Serializable {
 
 - Spring user IOC Container (Bean Factory or Application Context) to manage these objects
 
-#### <a name="chapter3part5"></a>Chapter 3 - Part 5: Primary & Qualifier
+#### <a name="chapter3part6"></a>Chapter 3 - Part 6: Primary & Qualifier
 
 Imagine now that we have a another bean that will return another address. We will calling getAddress2
 
