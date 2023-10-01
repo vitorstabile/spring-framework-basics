@@ -1338,7 +1338,17 @@ public class AppGamingBasicJava {
 }
 ```
 
-If we try to run this, we will get a error. This is because the Spring don't no were is the Components. To this, we need to add a Annotation in our configuration class, to look for the package were is the PacmanGame
+If we try to run this, we will get a error. 
+
+```
+Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appgame.game.GameRunner' available
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:341)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173)
+	at com.appgame.game.AppGamingBasicJava.main(AppGamingBasicJava.java:15)
+```
+
+This is because the Spring don't no were is the Components. To this, we need to add a Annotation in our configuration class, to look for the package were is the PacmanGame
 
 ```java
 package com.appgame.game;
@@ -1436,8 +1446,159 @@ public class AppGamingBasicJava {
 }
 ```
 
+Now, let's create another Component of Spring, the Mario Game
+
+```java
+package com.appgame.game;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class MarioGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("Jump");
+    }
+
+    public void down() {
+        System.out.println("Go into a hole");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Accelerate");
+    }
 
 
+}
+```
+
+If we try to run the application now, we will get this error
+
+```
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'com.appgame.game.GamingConsole' available: expected single matching bean but found 2: marioGame,pacmanGame
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:888)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+```
+
+This is because, there two classes that is implementing the interface GamingConsole. To avoid this, we need to use or the Primary annotion or the Qualifier annotation
+
+To PacmanGame let's put Primary
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
+@Primary
+public class PacmanGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("up");
+    }
+
+    public void down() {
+        System.out.println("down");
+    }
+
+    public void left() {
+        System.out.println("left");
+    }
+
+    public void right() {
+        System.out.println("right");
+    }
+
+}
+```
+
+To MarioGame, let's put Qualifier
+
+```java
+package com.appgame.game;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+@Qualifier("MarioGameQualifier")
+public class MarioGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("Jump");
+    }
+
+    public void down() {
+        System.out.println("Go into a hole");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Accelerate");
+    }
+
+
+}
+```
+
+Now, if we launch, the output will be for the PacmanGame
+
+```
+up
+down
+left
+right
+```
+
+If we modify the GameRunner to launch MarioGame
+
+```java
+package com.appgame.game;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class GameRunner {
+
+    private GamingConsole game;
+
+    public GameRunner(@Qualifier("MarioGameQualifier") GamingConsole game) {
+        this.game = game;
+    }
+
+    public void run() {
+
+        System.out.println("Running game: " + game);
+        game.up();
+        game.down();
+        game.left();
+        game.right();
+
+    }
+
+}
+```
+
+the output will be
+
+```
+Jump
+Go into a hole
+Go back
+Accelerate
+```
 
 ## <a name="biblio"></a>Bibliography's 
 
