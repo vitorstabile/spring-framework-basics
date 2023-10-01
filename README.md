@@ -799,6 +799,12 @@ XmlBeanFactory factory = new XmlBeanFactory(resource);
 ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 ```
 
+In the example above, the Context is in a configuration class that we put the annotation @Configuration
+
+```java
+ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+```
+
 #### <a name="chapter3part5"></a>Chapter 3 - Part 5: POJO vs Java Bean vs Spring Bean
 
 **POJO:** POJO in Java stands for Plain Old Java Object. It is an ordinary object, which is not bound by any special restriction. The POJO file does not require any special classpath. It increases the readability & re-usability of a Java program. Any Object create in Java is a POJO.
