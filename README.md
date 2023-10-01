@@ -1846,6 +1846,15 @@ The Spring recomend to use the Construct Base
 
 #### <a name="chapter3part10"></a>Chapter 3 - Part 10: @Component vs @Bean
 
+    | Heading             | @Component                                                      | @Bean                                                                            | 
+    |:--------------------|:----------------------------------------------------------------|                                                                                  |
+    | Where?              | Can be used on any Java class                                   | Typically used on methods in Spring Configuration classes                        |
+    | Ease of use         | Very easy. Just add an annotation.                              | You write all the code.                                                          |
+    | Autowiring          | Yes - Field, Setter or Constructor Injection                    | Yes - method call or method parameters                                           |
+    | Who creates beans?  | Spring Framework                                                | You write bean creation code                                                     |
+    | Recommended For     | Instantiating Beans for Your Own Application Code: @Component   | 1:Custom Business Logic 2: Instantiating Beans for 3rd-party libraries: @Bean    |
+    | Beans per class?    | One (Singleton) or Many (Prototype)                             | One or Many - You can create as many as you want                                 |
+
 ## <a name="biblio"></a>Bibliography's 
 
 Some of references that I use.
