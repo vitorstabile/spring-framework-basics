@@ -1187,7 +1187,7 @@ public class AppGamingBasicJava {
 
 output will be up
 
-Now, let's create a bean GameRunner in our Configuration class
+Now, let's create a bean GameRunner in our Configuration class.
 
 ```java
 package com.appgame.game;
@@ -1267,6 +1267,176 @@ gamingConfiguration
 game
 gameRunner
 ```
+
+Now, let's make the Spring create the Beans for us, avoiding creating them manually using @Bean
+
+Let's go to the Pacman class that will be a Bean that will me manage by Spring
+
+```java
+package com.appgame.game;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class PacmanGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("up");
+    }
+
+    public void down() {
+        System.out.println("down");
+    }
+
+    public void left() {
+        System.out.println("left");
+    }
+
+    public void right() {
+        System.out.println("right");
+    }
+
+}
+```
+
+Now, we can go to our Configuration Class and remove the instance of PacmanGame in the First Beans, that is using to inject the PacmanGame
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GamingConfiguration {
+    @Bean
+    public GameRunner gameRunner(GamingConsole game) {
+        var gameRunner = new GameRunner(game);
+        return gameRunner;
+    }
+}
+```
+
+Now, let's try to run
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Arrays;
+
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(GamingConfiguration.class);
+
+        context.getBean(GameRunner.class).run();
+
+    }
+}
+```
+
+If we try to run this, we will get a error. This is because the Spring don't no were is the Components. To this, we need to add a Annotation in our configuration class, to look for the package were is the PacmanGame
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class GamingConfiguration {
+    @Bean
+    public GameRunner gameRunner(GamingConsole game) {
+        var gameRunner = new GameRunner(game);
+        return gameRunner;
+    }
+}
+```
+
+Now, if we try to run, we get the correct output
+
+We can tell Spring to create the GameRunner to us
+
+```java
+package com.appgame.game;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class GameRunner {
+
+    private GamingConsole game;
+
+    public GameRunner(GamingConsole game) {
+        this.game = game;
+    }
+
+    public void run() {
+
+        System.out.println("Running game: " + game);
+        game.up();
+        game.down();
+        game.left();
+        game.right();
+
+    }
+
+}
+```
+
+Let's now remove the @Bean that because Spring is now creating this bean for us. The ConfigurationClass will be empty
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class GamingConfiguration {
+
+}
+```
+The output will be
+
+```
+Running game: com.appgame.game.PacmanGame@2177849e
+up
+down
+left
+right
+```
+
+To avoid the empty class, let's pass the Configuration class to the App Runner and delete the GamingConfiguration class. Now, in the Context, the Configuration clas will be AppGamingBasicJava
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        context.getBean(GameRunner.class).run();
+
+    }
+}
+```
+
+
 
 
 ## <a name="biblio"></a>Bibliography's 
