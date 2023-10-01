@@ -661,40 +661,6 @@ Another way that we can calling a bean is putting the class, and the class and m
 
 
 ```java
-package com.appgame.beansexample;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import java.io.Serializable;
-
-public class JavaBean implements Serializable {
-
-    //1: public no-arg constructor
-    public JavaBean() {
-
-    }
-    private String text;
-
-    private int number;
-
-    //2: getters and setters
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    
-}
 public class App {
 
     public static void main(String[] args) {
@@ -1134,6 +1100,172 @@ public class SuperContraGame implements GamingConsole {
         System.out.println("Shoot a bullet");
     }
 }
+```
+
+Our GameRunner class is responsible to run a GamingConsole
+
+```java
+package com.appgame.game;
+
+public class GameRunner {
+
+    private GamingConsole game;
+
+    public GameRunner(GamingConsole game) {
+        this.game = game;
+    }
+
+    public void run() {
+
+        System.out.println("Running game: " + game);
+        game.up();
+        game.down();
+        game.left();
+        game.right();
+
+    }
+
+}
+```
+
+To run the Pacman game for example, we have this class
+
+```java
+package com.appgame.game;
+
+public class AppGamingBasicJava {
+    
+    public static void main(String[] args) {
+
+        var game = new PacmanGame();
+
+        var gameRunner = new GameRunner(game);
+        gameRunner.run();
+
+    }
+}
+```
+
+In this case, will run the PacmanGame
+
+Now, let's manage how we will launch a game is the AppGamingBasicJava. Let's create a Configuration Class, that will be responsible to create the beans
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GamingConfiguration {
+    @Bean
+    public GamingConsole game() {
+        var game = new PacmanGame();
+        return game;
+    }
+}
+```
+
+Now, let's launch the the Run our App different, implementing the ApplicationContext
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(GamingConfiguration.class);
+
+        context.getBean(GamingConsole.class).up();
+
+    }
+}
+```
+
+output will be up
+
+Now, let's create a bean GameRunner in our Configuration class
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GamingConfiguration {
+
+    //same code previous
+
+    @Bean
+    public GameRunner gameRunner(GamingConsole game) {
+        var gameRunner = new GameRunner(game);
+        return gameRunner;
+    }
+}
+```
+
+And let's run
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(GamingConfiguration.class);
+
+        context.getBean(GamingConsole.class).up();
+
+        context.getBean(GameRunner.class).run();
+
+    }
+}
+```
+
+The output will be
+
+```
+up
+Running game: com.appgame.game.PacmanGame@2638011
+up
+down
+left
+right
+```
+
+Let's list the beans that Spring is managing
+
+```java
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(GamingConfiguration.class);
+
+        Arrays.stream(context.getBeanDefinitionNames())
+                .forEach(System.out::println);
+
+    }
+}
+```
+
+output
+```
+org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+org.springframework.context.annotation.internalAutowiredAnnotationProcessor
+org.springframework.context.annotation.internalCommonAnnotationProcessor
+org.springframework.context.event.internalEventListenerProcessor
+org.springframework.context.event.internalEventListenerFactory
+gamingConfiguration
+game
+gameRunner
 ```
 
 
