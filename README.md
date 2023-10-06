@@ -21,6 +21,7 @@
     - [Chapter 3 - Part 10: @Component vs @Bean](#chapter3part10)
 4. [Chapter 4: Advance Topics in Spring Framework](#chapter4)
     - [Chapter 4 - Part 1: Lazy and Eager Initialization](#chapter4part1)
+    - [Chapter 4 - Part 2: Spring Bean Scopes](#chapter4part2)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -1997,6 +1998,88 @@ Do Something
 | Usage                                               | Rarely used                                                       | Very frequently used                                                               |
 | Memory Consumption                                  | Less (until bean is initialized)                                  | All beans are initialized at startup                                               |
 | Recommended Scenario                                | Beans very rarely used in your app                                | Most of your beans                                                                 |
+
+#### <a name="chapter4part1"></a>Chapter 4 - Part 2: Spring Bean Scopes
+
+- Spring Beans are defined to be used in a specific scope:
+  - Singleton - One object instance per Spring IoC container
+  - Prototype - Possibly many object instances per Spring IoC container
+- Scopes applicable ONLY for web-aware Spring ApplicationContext
+  - Request - One object instance per single HTTP request
+  - Session - One object instance per user HTTP Session
+  - Application - One object instance per web application runtime
+  - Websocket - One object instance per WebSocket instance
+- Java Singleton (GOF) vs Spring Singleton
+  - Spring Singleton: One object instance per Spring IoC container
+  - Java Singleton (GOF): One object instance per JVM
+ 
+  
+
+Let's imagine that we have two classes, a NormalClass and a PrototypeClass
+
+```java
+package com.appgame.game;
+
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
+
+@Component
+class NormalClass {
+
+}
+
+@Scope(value= ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Component
+class PrototypeClass {
+
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        System.out.println(context.getBean(NormalClass.class));
+        System.out.println(context.getBean(NormalClass.class));
+
+        System.out.println(context.getBean(PrototypeClass.class));
+        System.out.println(context.getBean(PrototypeClass.class));
+        System.out.println(context.getBean(PrototypeClass.class));
+
+
+
+    }
+}
+```
+
+If we print this, we will see this in the logs
+
+```
+com.appgame.game.NormalClass@4e7912d8
+com.appgame.game.NormalClass@4e7912d8
+com.appgame.game.PrototypeClass@53976f5c
+com.appgame.game.PrototypeClass@2bfc268b
+com.appgame.game.PrototypeClass@2f8dad04
+```
+
+If you look to the output, the NormalClass have the same hashcode 4e7912d8 when we make a use of his bean.In the PrototypeClass, each time we get a new bean of the PrototypeClass, we will instantiate a new bean.
+
+In another words, when you ask for a bean, we will use the same instance of him normally, and this is called Singletons. Now, if you want a new instance of a bean each time you called, you will need to use the Annotation @Scope with the value SCOPE_PROTOTYPE (value= ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+
+| Heading               | Component                                                         | Bean                                                                               |
+|:---------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
+| Instances             | Possibly Many per Spring IOC Container                            | One per Spring IOC Container                                                       |
+| Beans                 | New bean instance created every time the bean is referred to      | Same bean instance reused                                                          |
+| Default               | NOT Default                                                       | Default                                                                            |
+| Code Snippet          | @Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)             | @Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON) or Default                   |
+| Usage                 | Rarely used                                                       | Very frequently used                                                               |
+| Recommended Scenario  | Stateful beans                                                    | Stateless beans                                                                    |
+
 
 ## <a name="biblio"></a>Bibliography's 
 
