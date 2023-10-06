@@ -2189,6 +2189,80 @@ someClass
 someDependency
 ```
 
+Now, if you want to do something beafore terminate a bean, you can use the annotation @PreDestroy. We will close the context to show the method PreDestroy be executed
+
+```java
+package com.appgame.game;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+@Component
+class SomeClass {
+
+    private SomeDependency someDependency;
+
+    public SomeClass(SomeDependency someDependency) {
+        super();
+        this.someDependency = someDependency;
+        System.out.println("All dependencies are ready!");
+    }
+
+    @PostConstruct
+    public void initialize() {
+        someDependency.getReady();
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        System.out.println("Cleanup");
+    }
+
+}
+
+@Component
+class SomeDependency {
+
+    public void getReady() {
+        System.out.println("Some logic using SomeDependency");
+    }
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+        System.out.println("Finishing the Life Cycle of the Beans");
+        context.close();
+    }
+}
+```
+
+```
+All dependencies are ready!
+Some logic using SomeDependency
+org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+org.springframework.context.annotation.internalAutowiredAnnotationProcessor
+org.springframework.context.annotation.internalCommonAnnotationProcessor
+org.springframework.context.event.internalEventListenerProcessor
+org.springframework.context.event.internalEventListenerFactory
+appGamingBasicJava
+someClass
+someDependency
+Finishing the Life Cycle of the Beans
+Cleanup
+```
+
 
 
 ## <a name="biblio"></a>Bibliography's 
