@@ -1840,7 +1840,7 @@ The Spring recomend to use the Construct Base
 
 #### <a name="chapter3part10"></a>Chapter 3 - Part 10: @Component vs @Bean
 
-| Heading              | Component                                                         | Bean                                                                               | 
+| Heading              | Component                                                         | Bean                                                                               |
 |:--------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | Where?               | Can be used on any Java class                                     | Typically used on methods in Spring Configuration classes                          |
 | Ease of use          | Very easy. Just add an annotation.                                | You write all the code.                                                            |
@@ -1854,7 +1854,150 @@ The Spring recomend to use the Construct Base
   
 #### <a name="chapter4part1"></a>Chapter 4 - Part 1: Lazy and Eager Initialization
 
+- Default initialization for Spring Beans: Eager (The initialization will be when we launch the application)
+- Eager initialization is recommended:
+  - Errors in the configuration are discovered immediately at application startup
+- However, you can configure beans to be lazily initialized using Lazy annotation:
+  - NOT recommended (AND) Not frequently used (If there is a error in configuration, this will cause a runtime error when we use the bean with lazy annotation)
+- Lazy annotation:
+  - Can be used almost everywhere @Component and @Bean are used
+  - Lazy-resolution proxy will be injected instead of actual dependency
+  - Can be used on Configuration (@Configuration) class:
+    - All @Bean methods within the @Configuration will be lazily initialized
+
+Let's imagine that we have a ClassA and a ClassB, and the ClassB needs the ClassA to initialize them self.
+
+So, let's create the beans for this classes, and let's initialize the context of the Spring
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+@Component
+class ClassA {
+
+}
+
+@Component
+class ClassB {
+
+    private ClassA classA;
+
+    public ClassB(ClassA classA) {
+        System.out.println("Some Initialization logic");
+        this.classA = classA;
+    }
+
+
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+    }
+}
+```
+
+If we run this application, we will see this in the logs
+
+```
+Some Initialization logic
+```
+
+Even if we aren't using the bean, he is initializated by the context.
+
+Now, if we put the annotation @Lazy in the ClassB, they will not be initialize
+
+```java
+@Component
+@Lazy
+class ClassB {
+
+    private ClassA classA;
+
+    public ClassB(ClassA classA) {
+        System.out.println("Some Initialization logic");
+        this.classA = classA;
+    }
+
+
+
+}
+
+```
+Process finished with exit code 0
+```
+
+To ilustrate more, let's initialize this bean after the contex, to illustrate that just after we call the Bean, is where he will be initialize when we use the @Lazy annotation
+
+
+```java
+@Component
+class ClassA {
+
+}
+
+@Component
+@Lazy
+class ClassB {
+
+    private ClassA classA;
+
+    public ClassB(ClassA classA) {
+        System.out.println("Some Initialization logic");
+        this.classA = classA;
+    }
+
+    public void doSomething(){
+        System.out.println("Do Something");
+    }
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        System.out.println("Initialization of context is completed");
+
+        context.getBean(ClassB.class).doSomething();
+
+
+
+    }
+}
+
+```
+Initialization of context is completed
+Some Initialization logic
+Do Something
+```
 aaa
+| Heading                                             | Lazy Initialization                                               | Eager Initialization                                                               |
+|:---------------------------------------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
+| Initialization time                                 | Bean initialized when it is first made use of in the application  | Bean initialized at startup of the application                                     |
+| Default                                             | NOT Default                                                       | Default                                                                            |
+| Code Snippet                                        | @Lazy OR @Lazy(value=true)                                        | @Lazy(value=false) OR (Absence of @Lazy)                                           |
+| What happens if there are errors in initializing?   | Errors will result in runtime exceptions                          | Errors will prevent application from starting up                                   |
+| Usage                                               | Rarely used                                                       | Very frequently used                                                               |
+| Memory Consumption                                  | Less (until bean is initialized)                                  | All beans are initialized at startup                                               |
+| Recommended Scenario                                | Beans very rarely used in your app                                | Most of your beans                                                                 |
+aaa
+
 
 ## <a name="biblio"></a>Bibliography's 
 
