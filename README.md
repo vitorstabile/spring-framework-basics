@@ -2138,6 +2138,59 @@ someClass
 someDependency
 ```
 
+Now, let's create a method in SomeDependency class, and use of the annotation @PostConstruct in, too when this bean be initalized, this method be executed
+
+```java
+@Component
+class SomeClass {
+
+    private SomeDependency someDependency;
+
+    public SomeClass(SomeDependency someDependency) {
+        super();
+        this.someDependency = someDependency;
+        System.out.println("All dependencies are ready!");
+    }
+
+    @PostConstruct
+    public void initialize() {
+        someDependency.getReady();
+    }
+
+}
+
+@Component
+class SomeDependency {
+
+    public void getReady() {
+        System.out.println("Some logic using SomeDependency");
+    }
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+    }
+}
+```
+
+```
+All dependencies are ready!
+Some logic using SomeDependency
+appGamingBasicJava
+someClass
+someDependency
+```
+
+
+
 ## <a name="biblio"></a>Bibliography's 
 
 Some of references that I use.
