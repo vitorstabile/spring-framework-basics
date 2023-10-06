@@ -22,6 +22,7 @@
 4. [Chapter 4: Advance Topics in Spring Framework](#chapter4)
     - [Chapter 4 - Part 1: Lazy and Eager Initialization](#chapter4part1)
     - [Chapter 4 - Part 2: Spring Bean Scopes](#chapter4part2)
+    - [Chapter 4 - Part 3: PostConstruct and PreDestroy](#chapter4part3)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -2080,6 +2081,62 @@ In another words, when you ask for a bean, we will use the same instance of him 
 | Usage                 | Rarely used                                                       | Very frequently used                                                               |
 | Recommended Scenario  | Stateful beans                                                    | Stateless beans                                                                    |
 
+#### <a name="chapter4part3"></a>Chapter 4 - Part 3: PostConstruct and PreDestroy
+
+Let's make a simple class with a simple dependecy in.
+
+
+```java
+
+package com.appgame.game;
+
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+@Component
+class SomeClass {
+
+    private SomeDependency someDependency;
+
+    public SomeClass(SomeDependency someDependency) {
+        super();
+        this.someDependency = someDependency;
+        System.out.println("All dependencies are ready!");
+    }
+
+}
+
+@Component
+class SomeDependency {
+
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+    }
+}
+
+```
+
+If we run this, we wil get
+
+
+```
+All dependecies are ready!
+appGamingBasicJava
+someClass
+someDependency
+```
 
 ## <a name="biblio"></a>Bibliography's 
 
