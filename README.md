@@ -1982,11 +1982,12 @@ public class AppGamingBasicJava {
 }
 
 ```
+```
 Initialization of context is completed
 Some Initialization logic
 Do Something
 ```
-aaa
+
 | Heading                                             | Lazy Initialization                                               | Eager Initialization                                                               |
 |:---------------------------------------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | Initialization time                                 | Bean initialized when it is first made use of in the application  | Bean initialized at startup of the application                                     |
@@ -1996,8 +1997,6 @@ aaa
 | Usage                                               | Rarely used                                                       | Very frequently used                                                               |
 | Memory Consumption                                  | Less (until bean is initialized)                                  | All beans are initialized at startup                                               |
 | Recommended Scenario                                | Beans very rarely used in your app                                | Most of your beans                                                                 |
-aaa
-
 
 ## <a name="biblio"></a>Bibliography's 
 
