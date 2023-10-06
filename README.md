@@ -6,12 +6,8 @@
     - [Chapter 1 - Part 1: What is Spring Framework?](#chapter1part1)
     - [Chapter 1 - Part 2: Why to use Spring?](#chapter1part2)
     - [Chapter 1 - Part 3: Applications of Spring](#chapter1part3)
-    - [Chapter 1 - Part 4: Applications of Spring](#chapter1part4)
-    - [Chapter 1 - Part 5: Applications of Spring](#chapter1part5)
 2. [Chapter 2: Knowing Spring Framework](#chapter2)
-    - [Chapter 2 - Part 1: Ba](#chapter2part1)
-    - [Chapter 2 - Part 2: Bb](#chapter2part2)
-    - [Chapter 2 - Part 3: First Project](#chapter2part3)
+    - [Chapter 2 - Part 1: First Project](#chapter2part3)
 3. [Chapter 3: Spring Container](#chapter3)
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
     - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
@@ -22,7 +18,9 @@
     - [Chapter 3 - Part 7: Our Java Code with Spring](#chapter3part7)
     - [Chapter 3 - Part 8: Different Types of Dependency Injections](#chapter3part8)
     - [Chapter 3 - Part 9: Important Terminology](#chapter3part9)
-    - [Chapter 3 - Part 10: @Component vs @Bean@Com](#chapter3part10)
+    - [Chapter 3 - Part 10: @Component vs @Bean](#chapter3part10)
+4. [Chapter 4: Advance Topics in Spring Framework](#chapter4)
+    - [Chapter 4 - Part 1: Lazy and Eager Initialization](#chapter4part1)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -69,12 +67,8 @@ Spring provides a handy API for converting technology-specific exceptions (such 
 IoC containers are typically lightweight, especially when compared to EJB containers, for example. This is useful for creating and distributing programs on systems with limited memory and CPU resources.
 
 ## <a name="chapter2"></a>Chapter 2: Knowing Spring Framework
-  
-#### <a name="chapter2part1"></a>Chapter 2 - Part 1: Ba
 
-#### <a name="chapter2part2"></a>Chapter 2 - Part 2: Bb
-
-#### <a name="chapter2part3"></a>Chapter 2 - Part 3: First Project
+#### <a name="chapter2part3"></a>Chapter 2 - Part 1: First Project
 
 Go to [Spring Initializr](https://start.spring.io/) and select the following:
 
@@ -1055,7 +1049,7 @@ public class PacmanGame implements GamingConsole {
 }
 ```
 
-MarioGame
+MarioGame@Component vs @Bean
 
 ```java
 package com.appgame.game;
@@ -1854,6 +1848,13 @@ The Spring recomend to use the Construct Base
     | Who creates beans?   | Spring Framework                                                  | You write bean creation code                                                       |
     | Recommended For      | Instantiating Beans for Your Own Application Code: @Component     | 1:Custom Business Logic 2: Instantiating Beans for 3rd-party libraries: @Bean      |
     | Beans per class?     | One (Singleton) or Many (Prototype)                               | One or Many - You can create as many as you want                                   |
+
+
+## <a name="chapter4"></a>Chapter 4: Advance Topics in Spring Framework
+  
+#### <a name="chapter4part1"></a>Chapter 4 - Part 1: Lazy and Eager Initialization
+
+aaa
 
 ## <a name="biblio"></a>Bibliography's 
 
