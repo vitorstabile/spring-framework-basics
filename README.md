@@ -1999,7 +1999,7 @@ Do Something
 | Memory Consumption                                  | Less (until bean is initialized)                                  | All beans are initialized at startup                                               |
 | Recommended Scenario                                | Beans very rarely used in your app                                | Most of your beans                                                                 |
 
-#### <a name="chapter4part1"></a>Chapter 4 - Part 2: Spring Bean Scopes
+#### <a name="chapter4part2"></a>Chapter 4 - Part 2: Spring Bean Scopes
 
 - Spring Beans are defined to be used in a specific scope:
   - Singleton - One object instance per Spring IoC container
