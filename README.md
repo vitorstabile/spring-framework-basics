@@ -1840,8 +1840,6 @@ The Spring recomend to use the Construct Base
 
 #### <a name="chapter3part10"></a>Chapter 3 - Part 10: @Component vs @Bean
 
-aaaa
-
 | Heading              | Component                                                         | Bean                                                                               | 
 |:--------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | Where?               | Can be used on any Java class                                     | Typically used on methods in Spring Configuration classes                          |
@@ -1850,9 +1848,6 @@ aaaa
 | Who creates beans?   | Spring Framework                                                  | You write bean creation code                                                       |
 | Recommended For      | Instantiating Beans for Your Own Application Code: @Component     | 1:Custom Business Logic 2: Instantiating Beans for 3rd-party libraries: @Bean      |
 | Beans per class?     | One (Singleton) or Many (Prototype)                               | One or Many - You can create as many as you want                                   |
-
-
-aaaa
 
 
 ## <a name="chapter4"></a>Chapter 4: Advance Topics in Spring Framework
