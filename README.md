@@ -80,6 +80,24 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 #### <a name="chapter2part1"></a>Chapter 2 - Part 1: Spring Big Picture - Framework, Modules and Projects
 
+<br>
+
+<div align="center"><img src="img/springmodules-w581-h497.png" width=581 height=497><br><sub>Spring Modules - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+- Spring Framework contains multiple Spring Modules:
+  - Fundamental Features: Core (IOC Container, Dependency Injection, Auto Wiring, ..)
+  - Web: Spring MVC etc (Web applications, REST API)
+  - Web Reactive: Spring WebFlux etc
+  - Data Access: JDBC, JPA etc
+  - Integration: JMS etc
+  - Testing: Mock Objects, Spring MVC Test etc
+
+- Why is Spring Framework divided into Modules?
+  - Each application can choose modules they want to make use of
+  - They do not need to make use of everything in Spring framework!
+
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: First Project
 
 Go to [Spring Initializr](https://start.spring.io/) and select the following:
