@@ -2072,7 +2072,7 @@ If you look to the output, the NormalClass have the same hashcode 4e7912d8 when 
 
 In another words, when you ask for a bean, we will use the same instance of him normally, and this is called Singletons. Now, if you want a new instance of a bean each time you called, you will need to use the Annotation @Scope with the value SCOPE_PROTOTYPE (value= ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 
-| Heading               | Component                                                         | Bean                                                                               |
+| Heading               | Prototype                                                         | Singleton                                                                               |
 |:---------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | Instances             | Possibly Many per Spring IOC Container                            | One per Spring IOC Container                                                       |
 | Beans                 | New bean instance created every time the bean is referred to      | Same bean instance reused                                                          |
