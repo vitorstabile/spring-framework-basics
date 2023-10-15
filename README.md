@@ -2290,12 +2290,108 @@ Cleanup
       - Use of Java EE
     - Supported by Spring 6 and Spring Boot 3
       - That's why we use jakarta. packages (instead of javax.)
-     
-
 
 #### <a name="chapter4part5"></a>Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)
 
+- Spring Framework V1 was released in 2004
+- CDI specification introduced into Java EE 6 platform in December 2009
+- Now called Jakarta Contexts and Dependency Injection (CDI)
+- CDI is a specification (interface)
+  - Spring Framework implements CDI
+- Important Inject API Annotations:
+  - Inject (~Autowired in Spring)
+  - Named (~Component in Spring)
+  - Qualifier
+  - Scope
+  - Singleton
+ 
+Let's make a example of the use of CDI in our project.
 
+To use, you need to go in your pom.xml file in your java project, and add a dependency called jakarta.inject
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	...
+	<dependencies>
+		<dependency>
+			...
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+			...
+		</dependency>
+	</dependencies>
+
+	<build>
+		...
+	</build>
+
+</project>
+```
+
+Let's imagine that I have a class BusinessService that make use of a DataService
+
+```java
+package com.appgame.game;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+
+@Component
+class BusinessService {
+    DataService dataService;
+
+
+    @Autowired
+    public DataService getDataService() {
+        System.out.println("Setter Injection");
+        return dataService;
+    }
+
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
+    }
+}
+
+@Component
+class DataService {
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+    }
+}
+```
+
+If we run this, I will have this output
+
+```
+Setter Injection
+appGamingBasicJava
+businessService
+dataService
+```
 
 
 ## <a name="biblio"></a>Bibliography's 
