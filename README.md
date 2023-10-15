@@ -25,6 +25,7 @@
     - [Chapter 4 - Part 3: PostConstruct and PreDestroy](#chapter4part3)
     - [Chapter 4 - Part 4: Evolution of Jakarta EE: vs J2EE vs Java EE](#chapter4part4)
     - [Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)](#chapter4part5)
+    - [Chapter 4 - Part 6: Java Spring XML Configuration](#chapter4part6)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -2462,7 +2463,95 @@ Setter Injection
 com.appgame.game.DataService@2accdbb5
 ```
 
+#### <a name="chapter4part6"></a>Chapter 4 - Part 6: Java Spring XML Configuration
 
+When the Spring Framework was first released, there no Java Configuration with annotations, but all configurations was done using XML.
+
+To start, go to resources folder in your Java project andf create a configuration xml file
+
+
+<br>
+
+<div align="center"><img src="img/configurationxml-w368-h250.png" width=368 height=250><br><sub>Evolution of Jakarta EE - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+In the file, use this XML
+
+```
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+    	
+     	
+    </beans>
+```
+
+Now, let's modify our configuration class. There is no need to use a @Configuration Annotation and @Component Scan. Now we will launch our beans from the XML file. To do this, use the class ClassPathXmlApplicationContext passing the name of XML configuration file
+
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.Arrays;
+
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new ClassPathXmlApplicationContext("contextConfiguration.xml");
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+    }
+}
+```
+
+If you run this, noting will be printed. 
+
+Now, let's make a bean in our configuration xml file
+
+```
+<beans>
+    <bean id="name" class="java.lang.String">
+        <constructor-arg value="Hello World"/>
+    </bean>
+</beans>
+```
+
+In this xml, we are creating a Bean with id name, and the constructor of this bean will be a hello world
+
+If we go to the our launcher, and print all the beans and print the bean, we will get the output of all beans there is in our XML and the output of the constructor
+
+```java
+package com.appgame.game;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.Arrays;
+
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new ClassPathXmlApplicationContext("contextConfiguration.xml");
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+        System.out.println(context.getBean("name"));
+
+    }
+}
+```
+
+```
+name
+Hello World
+```
 
 ## <a name="biblio"></a>Bibliography's 
 
