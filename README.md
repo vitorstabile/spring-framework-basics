@@ -2353,13 +2353,12 @@ import java.util.Arrays;
 class BusinessService {
     DataService dataService;
 
-
-    @Autowired
     public DataService getDataService() {
         System.out.println("Setter Injection");
         return dataService;
     }
 
+    @Autowired
     public void setDataService(DataService dataService) {
         this.dataService = dataService;
     }
@@ -2380,6 +2379,8 @@ public class AppGamingBasicJava {
 
         Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
 
+	System.out.println(context.getBean(BusinessService.class).getDataService());
+
     }
 }
 ```
@@ -2391,7 +2392,76 @@ Setter Injection
 appGamingBasicJava
 businessService
 dataService
+com.appgame.game.DataService@693fe6c9
 ```
+
+We can use another annotations to do the same thing
+
+-> @Component - @Named
+
+-> @Autowired - @Inject
+
+```java
+package com.appgame.game;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+
+
+//@Component
+@Named
+class BusinessService {
+    DataService dataService;
+
+    public DataService getDataService() {
+        System.out.println("Setter Injection");
+        return dataService;
+    }
+
+    //@Autowired
+    @Inject
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
+    }
+}
+
+//@Component
+@Named
+class DataService {
+
+}
+
+@Configuration
+@ComponentScan("com.appgame.game")
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new AnnotationConfigApplicationContext(AppGamingBasicJava.class);
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+        System.out.println(context.getBean(BusinessService.class).getDataService());
+
+    }
+}
+```
+
+the output will be
+
+```
+appGamingBasicJava
+businessService
+dataService
+Setter Injection
+com.appgame.game.DataService@2accdbb5
+```
+
 
 
 ## <a name="biblio"></a>Bibliography's 
