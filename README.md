@@ -23,6 +23,8 @@
     - [Chapter 4 - Part 1: Lazy and Eager Initialization](#chapter4part1)
     - [Chapter 4 - Part 2: Spring Bean Scopes](#chapter4part2)
     - [Chapter 4 - Part 3: PostConstruct and PreDestroy](#chapter4part3)
+    - [Chapter 4 - Part 4: Evolution of Jakarta EE: vs J2EE vs Java EE](#chapter4part4)
+    - [Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)](#chapter4part5)
 3. [Bibliography's](#biblio)
 
 ## <a name="chapter1"></a>Chapter 1: Introducing Spring Framework
@@ -2263,6 +2265,32 @@ Finishing the Life Cycle of the Beans
 Cleanup
 ```
 
+#### <a name="chapter4part4"></a>Chapter 4 - Part 4: Evolution of Jakarta EE: vs J2EE vs Java EE
+
+<br>
+
+<div align="center"><img src="img/jakartaevolution-w780-h80.png" width=780 height=80><br><sub>Evolution of Jakarta EE - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+- Enterprise capabilities were initially built into JDK
+- With time, they were separated out:
+  - J2EE - Java 2 Platform Enterprise Edition
+  - Java EE - Java Platform Enterprise Edition (Rebranding)
+  - Jakarta EE (Oracle gave Java EE rights to the Eclipse Foundation)
+    - Important Specifications:
+      - Jakarta Server Pages (JSP)
+      - Jakarta Standard Tag Library (JSTL)
+      - Jakarta Enterprise Beans (EJB)
+      - Jakarta RESTful Web Services (JAX-RS)
+      - Jakarta Bean Validation
+      - Jakarta Contexts and Dependency Injection (CDI)
+      - Jakarta Persistence (JPA)
+    - Supported by Spring 6 and Spring Boot 3
+      - That's why we use jakarta. packages (instead of javax.)
+
+
+#### <a name="chapter4part5></a>Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)
 
 
 ## <a name="biblio"></a>Bibliography's 
