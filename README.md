@@ -2286,11 +2286,16 @@ Cleanup
       - Jakarta Bean Validation
       - Jakarta Contexts and Dependency Injection (CDI)
       - Jakarta Persistence (JPA)
+    - Supported by Spring > 6 and Spring Boot > 3
+      - Use of Java EE
     - Supported by Spring 6 and Spring Boot 3
       - That's why we use jakarta. packages (instead of javax.)
+     
 
 
-#### <a name="chapter4part5></a>Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)
+#### <a name="chapter4part5"></a>Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)
+
+
 
 
 ## <a name="biblio"></a>Bibliography's 
