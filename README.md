@@ -7,8 +7,9 @@
     - [Chapter 1 - Part 2: Why to use Spring?](#chapter1part2)
     - [Chapter 1 - Part 3: Applications of Spring](#chapter1part3)
 2. [Chapter 2: Knowing Spring Framework](#chapter2)
-    - [Chapter 2 - Part 1: First Project](#chapter2part3)
-3. [Chapter 3: Spring Container](#chapter3)
+    - [Chapter 2 - Part 1: Spring Big Picture - Framework, Modules and Projects](#chapter2part1)
+    - [Chapter 2 - Part 2: First Project](#chapter2part2)
+4. [Chapter 3: Spring Container](#chapter3)
     - [Chapter 3 - Part 1: Tightly Coupled Java Code](#chapter3part1)
     - [Chapter 3 - Part 2: Loosely Coupled Java Code](#chapter3part2)
     - [Chapter 3 - Part 3: Spring Bean and Spring IoC Container](#chapter3part3)
@@ -19,7 +20,7 @@
     - [Chapter 3 - Part 8: Different Types of Dependency Injections](#chapter3part8)
     - [Chapter 3 - Part 9: Important Terminology](#chapter3part9)
     - [Chapter 3 - Part 10: @Component vs @Bean](#chapter3part10)
-4. [Chapter 4: Advance Topics in Spring Framework](#chapter4)
+5. [Chapter 4: Advance Topics in Spring Framework](#chapter4)
     - [Chapter 4 - Part 1: Lazy and Eager Initialization](#chapter4part1)
     - [Chapter 4 - Part 2: Spring Bean Scopes](#chapter4part2)
     - [Chapter 4 - Part 3: PostConstruct and PreDestroy](#chapter4part3)
@@ -27,7 +28,7 @@
     - [Chapter 4 - Part 5: Jakarta Contexts & Dependency Injection (CDI)](#chapter4part5)
     - [Chapter 4 - Part 6: Java Spring XML Configuration](#chapter4part6)
     - [Chapter 4 - Part 7: Spring Stereotype Annotations](#chapter4part7)
-5. [Chapter 5: Review Important Spring Annotations & Concepts](#chapter5)
+6. [Chapter 5: Review Important Spring Annotations & Concepts](#chapter5)
     - [Chapter 5 - Part 1: Review of Important Spring Annotations](#chapter5part1)
     - [Chapter 5 - Part 2: Review of Important Spring Concepts](#chapter5part2)
 3. [Bibliography's](#biblio)
@@ -77,7 +78,9 @@ IoC containers are typically lightweight, especially when compared to EJB contai
 
 ## <a name="chapter2"></a>Chapter 2: Knowing Spring Framework
 
-#### <a name="chapter2part3"></a>Chapter 2 - Part 1: First Project
+#### <a name="chapter2part1"></a>Chapter 2 - Part 1: Spring Big Picture - Framework, Modules and Projects
+
+#### <a name="chapter2part2"></a>Chapter 2 - Part 2: First Project
 
 Go to [Spring Initializr](https://start.spring.io/) and select the following:
 
