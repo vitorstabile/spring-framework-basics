@@ -2553,6 +2553,125 @@ name
 Hello World
 ```
 
+You can make other beans
+
+```
+<beans>
+    <bean id="name" class="java.lang.String">
+        <constructor-arg value="Hello World"/>
+    </bean>
+
+    <bean id="age" class="java.lang.Integer">
+        <constructor-arg value="35"/>
+    </bean>
+</beans>
+```
+
+```java
+System.out.println(context.getBean("age"));
+```
+
+```
+35
+```
+
+Now, let's make a component Scan of a Package
+
+```
+<beans>
+    <context:component-scan base-package="com.appgame.game"/>
+</beans>
+```
+
+if we add a annotation in the MarioGame class as @Component
+
+```java
+@Component
+public class MarioGame implements GamingConsole {
+
+    public void up() {
+        System.out.println("Jump");
+    }
+
+    public void down() {
+        System.out.println("Go into a hole");
+    }
+
+    public void left() {
+        System.out.println("Go back");
+    }
+
+    public void right() {
+        System.out.println("Accelerate");
+    }
+
+
+}
+```
+
+Now, let's launch and the output will be
+
+
+```
+marioGame
+```
+
+We can launch a bean individually
+
+
+```
+<beans>
+    <bean id="game" class="com.appgame.game.MarioGame"/>
+</beans>
+```
+
+If we run, the output will be
+
+```
+game
+```
+
+Now, let's make a bean with GameRunner and inject in the constructor the Mario Game
+
+```
+<bean id="game" class="com.appgame.game.MarioGame"/>
+
+    <bean id="gameRunner" class="com.appgame.game.GameRunner">
+       <constructor-arg ref="game"/>
+    </bean>
+```
+
+If we run this
+
+```java
+public class AppGamingBasicJava {
+
+    public static void main(String[] args) {
+
+        var context = new ClassPathXmlApplicationContext("contextConfiguration.xml");
+
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+        context.getBean(GameRunner.class).run();
+
+    }
+}
+```
+
+The output will be
+
+```
+name
+age
+game
+gameRunner
+Running game: com.appgame.game.MarioGame@7c729a55
+Jump
+Go into a hole
+Go back
+Accelerate
+```
+
 ## <a name="biblio"></a>Bibliography's 
 
 Some of references that I use.
