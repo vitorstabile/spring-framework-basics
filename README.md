@@ -2075,7 +2075,7 @@ If you look to the output, the NormalClass have the same hashcode 4e7912d8 when 
 
 In another words, when you ask for a bean, we will use the same instance of him normally, and this is called Singletons. Now, if you want a new instance of a bean each time you called, you will need to use the Annotation @Scope with the value SCOPE_PROTOTYPE (value= ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 
-| Heading               | Prototype                                                         | Singleton                                                                               |
+| Heading               | Prototype                                                         | Singleton                                                                          |
 |:---------------------:|:-----------------------------------------------------------------:|:----------------------------------------------------------------------------------:|
 | Instances             | Possibly Many per Spring IOC Container                            | One per Spring IOC Container                                                       |
 | Beans                 | New bean instance created every time the bean is referred to      | Same bean instance reused                                                          |
@@ -2466,6 +2466,16 @@ com.appgame.game.DataService@2accdbb5
 #### <a name="chapter4part6"></a>Chapter 4 - Part 6: Java Spring XML Configuration
 
 When the Spring Framework was first released, there no Java Configuration with annotations, but all configurations was done using XML.
+
+| Heading               | Annotations                                                         | XML Configuration                   |
+|:---------------------:|:-------------------------------------------------------------------:|:-----------------------------------:|
+| Ease of use           | Very Easy (defined close to source - class, method and/or variable) | Cumbersome                          |
+| Short and concise     | Yes                                                                 | No                                  |
+| Clean POJOs           | No. POJOs are polluted with Spring Annotations                      | Yes. No change in Java code         |
+| Easy to Maintain      | Yes                                                                 | No                                  |
+| Usage Frequency       | Almost all recent projects                                          | Rarely                              |
+| Recommendation        | Either of them is fine BUT be consistent                            | Do NOT mix both                     |
+| Debugging difficulty  | Hard                                                                | Medium                              |
 
 To start, go to resources folder in your Java project andf create a configuration xml file
 
