@@ -487,36 +487,7 @@ public class AppGamingBasicJava {
 }
 ```
 
-If we look to this code, the PacmanGame neimport java.io.Serializable;
-
-public class JavaBean implements Serializable {
-
-    //1: public no-arg constructor
-    public JavaBean() {
-
-    }
-    private String text;
-
-    private int number;
-
-    //2: getters and setters
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    
-}eds a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
+If we look to this code, the PacmanGame needs a GameRunner class to run, in other words, a GamingConsole needs a GameRunner class to run. In the code, we are injecting a game (GameConsole) in her dependency (GameRunner). With a framework, we are capable to manage the creation of this objects and the framework will manage this dependencies.
 
 #### <a name="chapter3part3"></a>Chapter 3 - Part 3: Spring Bean and Spring IoC Container
 
