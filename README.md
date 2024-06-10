@@ -226,36 +226,7 @@ public class SuperContraGame {
 	}
 
 }
-```import java.io.Serializable;
-
-public class JavaBean implements Serializable {
-
-    //1: public no-arg constructor
-    public JavaBean() {
-
-    }
-    private String text;
-
-    private int number;
-
-    //2: getters and setters
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    
-}
+```
 
 The Pacman Class
 
